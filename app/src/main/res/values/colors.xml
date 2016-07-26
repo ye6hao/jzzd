@@ -3,4 +3,10 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <!--index的welcometitle背景颜色-->
+    <color name="color_welcome_title">#BCD2EE</color>
+    <color name="color_lecture_title_backgroud">#EAEAEA</color>
+    <color name="color_lecture_title_topic">#7A67EE</color>
+
 </resources>

@@ -42,6 +42,28 @@ public class LoginActivity extends AppCompatActivity {
         .setFileExpiration(2500)
         .build();
         Bmob.initialize(config);
+
+        /*
+        * 本地会自动保存一份当前用户信息，有效期为一年
+        * 用户第一次登录输入账户和密码
+        */
+
+        loginUser= User.getCurrentUser(User.class);
+        if(loginUser != null){
+            // 允许用户使用应用,进入主页面
+            Intent intent=new Intent();
+            intent.setClass(LoginActivity.this,IndexActivity.class);
+            startActivity(intent);
+
+        }else{
+            //缓存用户对象为空时， 可打开用户注册界面…
+        }
+
+
+
+
+
+
     }
 
 
@@ -50,13 +72,8 @@ public class LoginActivity extends AppCompatActivity {
         mUsername=(EditText)findViewById(R.id.username);
         mPassword=(EditText)findViewById(R.id.password);
 
-
         String  username=mUsername.getText().toString();//用户名是唯一的可以用在。通过用户名可以和用户信息连接
         String password=mPassword.getText().toString();
-
-
-
-        //登陆成功怎么把用户传入到主页中。session？？？
 
         loginUser=new User();
         loginUser.setUsername(username);

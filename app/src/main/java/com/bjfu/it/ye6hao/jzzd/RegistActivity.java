@@ -43,7 +43,11 @@ public class RegistActivity extends AppCompatActivity {
         newUser.setNick("haha");
         newUser.setAge(18);
 
-        //注意：不能用save方法进行注册
+        //注意：不能用save方法进行注册。注册成功后直接跳到index.xml
+
+        /*
+        * 注册成功后会将新注册的User信息保存道本地
+        * */
         newUser.signUp(new SaveListener<User>() {
             @Override
             public void done(User s, BmobException e) {
@@ -52,7 +56,8 @@ public class RegistActivity extends AppCompatActivity {
                     Intent intent=new Intent();
                     intent.setClass(RegistActivity.this,LoginActivity.class);
                     startActivity(intent);
-                    //通过BmobUser.getCurrentUser(context)方法获取登录成功后的本地用户信息
+
+
                 }else{
                     Toast.makeText(RegistActivity.this,"注册失败"+e,Toast.LENGTH_LONG).show();
                 }
