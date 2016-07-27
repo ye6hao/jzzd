@@ -55,27 +55,26 @@ public class LoginActivity extends AppCompatActivity {
             intent.setClass(LoginActivity.this,IndexActivity.class);
             startActivity(intent);
 
+
         }else{
             //缓存用户对象为空时， 可打开用户注册界面…
+            Intent intent=new Intent();
+            intent.setClass(LoginActivity.this,LoginActivity.class);
+            startActivity(intent);
         }
-
-
-
-
-
 
     }
 
 
     /*提交反馈信息*/
-    public void doLogin(View view){
-        mUsername=(EditText)findViewById(R.id.username);
-        mPassword=(EditText)findViewById(R.id.password);
+    public void doLogin(View view) {
+        mUsername = (EditText) findViewById(R.id.username);
+        mPassword = (EditText) findViewById(R.id.password);
 
-        String  username=mUsername.getText().toString();//用户名是唯一的可以用在。通过用户名可以和用户信息连接
-        String password=mPassword.getText().toString();
+        String username = mUsername.getText().toString();//用户名唯一性
+        String password = mPassword.getText().toString();
 
-        loginUser=new User();
+        loginUser = new User();
         loginUser.setUsername(username);
         loginUser.setPassword(password);
 

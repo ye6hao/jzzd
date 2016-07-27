@@ -1,8 +1,11 @@
 package com.bjfu.it.ye6hao.jzzd.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
+import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobObject;
+import cn.bmob.v3.datatype.BmobDate;
 
 /**
  * Created by yellow_hao on 2016/6/16.
@@ -22,67 +25,29 @@ import cn.bmob.v3.BmobObject;
 //讲座信息表lecture，11个参数
 public class Lecture extends BmobObject implements Serializable {
 
-    @Override
-    public String toString() {
-        return
-                "主题简介:"+'\t' + topic_intro +'\n' +
-                "主讲简介: "+'\t' + speaker_intro +'\n' +
-                "开始日期: " +'\t'+ start_date +'\n' +
-                "时间:" + '\t'+ start_time +'\n' +
-                "位置"+ '\t' + location +'\n' +
-                "类型" + '\t'+ type_name+'\n' +
-                "状态:" + '\t'+ status+'\n' +
-                "关注度:"+ '\t' + hot;
-    }
+
 
     public Lecture() {
         super();
     }
 
-    //private  Integer    lecture_id;         //1讲座编号
-    private String topic;               //2讲座主题
-    private String speaker;            //3讲座嘉宾
-    private String topic_intro;        //4主题简介
-    private String speaker_intro;      //5嘉宾简介
 
 
-    /*    private Date    start_date;         //6开始日期 年月日
-        private Time    start_time;           //7开始时间  时分秒*/
-    private String start_date;         //6开始日期 年月日
-    private String start_time;           //7开始时间  时分秒
+    private String topic;           //1、讲座主题
+    private String topicIntro;      //2、主题简介
+    private String speaker;         //3、主讲人
+    private String speakerIntro;    //4、主讲人简介
+    private String host;            //5、主持人
+    private String typeId;          //6、讲座类型编号
 
+    private BmobDate lectureDate;    //7、讲座日期
+    private String location;        //8、地址
 
-    private String location;           //8位置
-    private String type_name;         //9讲座类型
-    private Boolean status;             //10建立一个线程，true为on ；false为off
-    private Integer hot;                    //11关注数量
+    private boolean status;         //9、讲座状态：是否过时，false为过时
+    private Integer hotNum;         //10、热度：浏览次数
+    private Integer favorateNum;    //11、收藏量
+    private String sourceFrom;      //12、信息来源
 
-
-
-
-
-    public String getStart_time() {
-        return start_time;
-    }
-    public void setStart_time(String start_time) {
-        this.start_time = start_time;
-    }
-    public String getStart_date() {
-        return start_date;
-    }
-    public void setStart_date(String start_date) {
-        this.start_date = start_date;
-    }
-
-
-
-/*    public int getLecture_id() {
-        return lecture_id;
-    }
-
-    public void setLecture_id(int lecture_id) {
-        this.lecture_id = lecture_id;
-    }*/
 
     public String getTopic() {
         return topic;
@@ -90,6 +55,14 @@ public class Lecture extends BmobObject implements Serializable {
 
     public void setTopic(String topic) {
         this.topic = topic;
+    }
+
+    public String getTopicIntro() {
+        return topicIntro;
+    }
+
+    public void setTopicIntro(String topicIntro) {
+        this.topicIntro = topicIntro;
     }
 
     public String getSpeaker() {
@@ -100,37 +73,21 @@ public class Lecture extends BmobObject implements Serializable {
         this.speaker = speaker;
     }
 
-    public String getTopic_intro() {
-        return topic_intro;
+    public String getSpeakerIntro() {
+        return speakerIntro;
     }
 
-    public void setTopic_intro(String topic_intro) {
-        this.topic_intro = topic_intro;
+    public void setSpeakerIntro(String speakerIntro) {
+        this.speakerIntro = speakerIntro;
     }
 
-    public String getSpeaker_intro() {
-        return speaker_intro;
+    public BmobDate getLectureDate() {
+        return lectureDate;
     }
 
-    public void setSpeaker_intro(String speaker_intro) {
-        this.speaker_intro = speaker_intro;
+    public void setLectureDate(BmobDate lectureDate) {
+        this.lectureDate = lectureDate;
     }
-
-/*    public Date getStart_date() {
-        return start_date;
-    }
-
-    public void setStart_date(Date start_date) {
-        this.start_date = start_date;
-    }
-
-    public Time getStart_time() {
-        return start_time;
-    }
-
-    public void setStart_time(Time start_time) {
-        this.start_time = start_time;
-    }*/
 
     public String getLocation() {
         return location;
@@ -140,15 +97,23 @@ public class Lecture extends BmobObject implements Serializable {
         this.location = location;
     }
 
-    public String getType_name() {
-        return type_name;
+    public String getTypeId() {
+        return typeId;
     }
 
-    public void setType_name(String type_name) {
-        this.type_name = type_name;
+    public void setTypeId(String typeId) {
+        this.typeId = typeId;
     }
 
-    public boolean getStatus() {
+    public String getHost() {
+        return host;
+    }
+
+    public void setHost(String host) {
+        this.host = host;
+    }
+
+    public boolean isStatus() {
         return status;
     }
 
@@ -156,14 +121,27 @@ public class Lecture extends BmobObject implements Serializable {
         this.status = status;
     }
 
-    public int getHot() {
-        return hot;
+    public Integer getHotNum() {
+        return hotNum;
     }
 
-    public void setHot(int hot) {
-        this.hot = hot;
+    public void setHotNum(Integer hotNum) {
+        this.hotNum = hotNum;
     }
 
+    public Integer getFavorateNum() {
+        return favorateNum;
+    }
 
+    public void setFavorateNum(Integer favorateNum) {
+        this.favorateNum = favorateNum;
+    }
 
+    public String getSourceFrom() {
+        return sourceFrom;
+    }
+
+    public void setSourceFrom(String sourceFrom) {
+        this.sourceFrom = sourceFrom;
+    }
 }

@@ -31,7 +31,8 @@
         <activity android:name=".IndexActivity" />
         <activity android:name=".RegistActivity" />
         <activity android:name=".PersonalActivity" />
-        <activity android:name=".AlterInfoActivity"></activity>
+        <activity android:name=".AlterInfoActivity" />
+        <activity android:name=".LectureInfoActivity"></activity>
     </application>
 
 </manifest>
