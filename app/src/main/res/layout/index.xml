@@ -12,7 +12,7 @@
     <!--欢迎进入主页界面-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="35dp"
+        android:layout_height="40dp"
         android:gravity="center_horizontal|center_vertical"
         android:id="@+id/welcome_tile"
         android:background="#fb4575">
@@ -24,6 +24,7 @@
             android:clickable="true"
             android:gravity="center"
             android:textColor="#ffffff" />
+
     </LinearLayout>
 
 

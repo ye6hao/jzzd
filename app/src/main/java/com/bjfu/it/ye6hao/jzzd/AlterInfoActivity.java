@@ -70,7 +70,7 @@ public class AlterInfoActivity extends AppCompatActivity {
         loginUser.setSignature(personal_signature.getText().toString());
 
 
-        //修改本地和服务器上的User
+        //修改本地User的同时修改服务器上的数据
         loginUser.update(new UpdateListener() {
             @Override
             public void done(BmobException e) {

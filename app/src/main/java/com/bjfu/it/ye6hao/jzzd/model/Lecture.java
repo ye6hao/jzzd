@@ -36,6 +36,20 @@ public class Lecture extends BmobObject implements Serializable {
     private String topic;           //1、讲座主题
     private String topicIntro;      //2、主题简介
     private String speaker;         //3、主讲人
+
+    @Override
+    public String toString() {
+        return  "讲座分享！\n"+
+                "主题：" + topic + '\n' +
+                "内容简介：" + topicIntro + '\n' +
+                "主讲人：" + speaker + '\n' +
+                "主讲简介：" + speakerIntro + '\n' +
+                "主持人：" + host + '\n' +
+                "讲座类型：" + typeId + '\n' +
+                "时间：" + lectureDate.getDate() + '\n' +
+                "讲座地址：" + location;
+    }
+
     private String speakerIntro;    //4、主讲人简介
     private String host;            //5、主持人
     private String typeId;          //6、讲座类型编号
@@ -45,8 +59,9 @@ public class Lecture extends BmobObject implements Serializable {
 
     private boolean status;         //9、讲座状态：是否过时，false为过时
     private Integer hotNum;         //10、热度：浏览次数
-    private Integer favorateNum;    //11、收藏量
+    private Integer favoriteNum;    //11、收藏量
     private String sourceFrom;      //12、信息来源
+
 
 
     public String getTopic() {
@@ -129,12 +144,12 @@ public class Lecture extends BmobObject implements Serializable {
         this.hotNum = hotNum;
     }
 
-    public Integer getFavorateNum() {
-        return favorateNum;
+    public Integer getFavoriteNum() {
+        return favoriteNum;
     }
 
-    public void setFavorateNum(Integer favorateNum) {
-        this.favorateNum = favorateNum;
+    public void setFavoriteNum(Integer favoriteNum) {
+        this.favoriteNum = favoriteNum;
     }
 
     public String getSourceFrom() {

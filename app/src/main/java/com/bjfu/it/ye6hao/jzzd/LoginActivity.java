@@ -1,10 +1,13 @@
 package com.bjfu.it.ye6hao.jzzd;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +25,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private TextView mUsername;
     private TextView mPassword;
+    private Button mLogOut;
 
     private User loginUser;//用于登录验证
 
@@ -43,28 +47,56 @@ public class LoginActivity extends AppCompatActivity {
         .build();
         Bmob.initialize(config);
 
-        /*
-        * 本地会自动保存一份当前用户信息，有效期为一年
-        * 用户第一次登录输入账户和密码
-        */
 
-        loginUser= User.getCurrentUser(User.class);
-        if(loginUser != null){
-            // 允许用户使用应用,进入主页面
-            Intent intent=new Intent();
-            intent.setClass(LoginActivity.this,IndexActivity.class);
-            startActivity(intent);
+            /*
+            * 本地会自动保存一份当前用户信息，有效期为一年
+            * 用户第一次登录输入账户和密码
+            */
+        final Handler handler = new Handler();
+        //匿名内部类。连名字都没有，只有在这里才会调用
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                loginUser = User.getCurrentUser(User.class);
+                if (loginUser != null) {
+                    // 允许用户使用应用,进入主页面
+                    Intent intent = new Intent();
+                    intent.setClass(LoginActivity.this, IndexActivity.class);
+                    startActivity(intent);
+                    finish();
+
+                } else {
+                    //缓存用户对象为空时， 可打开用户注册界面…
+                    return;
+                }
 
 
-        }else{
-            //缓存用户对象为空时， 可打开用户注册界面…
-            Intent intent=new Intent();
-            intent.setClass(LoginActivity.this,LoginActivity.class);
-            startActivity(intent);
-        }
+            }
+
+
+        });
+
+
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+/*
+        loginUser = User.getCurrentUser(User.class);
+        if (loginUser != null) {
+            // 允许用户使用应用,进入主页面
+            Intent intent = new Intent();
+            intent.setClass(LoginActivity.this, IndexActivity.class);
+            startActivity(intent);
+
+        } else {
+            //缓存用户对象为空时， 可打开用户注册界面…
+            return;
+        }
+        finish();*/
+    }
 
     /*提交反馈信息*/
     public void doLogin(View view) {
@@ -79,7 +111,6 @@ public class LoginActivity extends AppCompatActivity {
         loginUser.setPassword(password);
 
          /*登陆验证*/
-
         loginUser.login(new SaveListener<User>() {
 
             @Override
@@ -108,4 +139,14 @@ public class LoginActivity extends AppCompatActivity {
         intent.setClass(LoginActivity.this,RegistActivity.class);
         startActivity(intent);
     }
+
+
+    //退出登录
+    public void logOut(View view){
+        User.logOut();
+        User currentUser = User.getCurrentUser(User.class);
+    }
+
+
+
 }
