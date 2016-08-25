@@ -102,6 +102,11 @@ public class IndexActivity extends AppCompatActivity {
     }
 
 
+
+
+    /**
+     * 创建讲座信息
+     * */
     private void  createLecture(){
 
         Lecture lecture = new Lecture();
