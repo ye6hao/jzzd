@@ -9,4 +9,7 @@
     <color name="color_lecture_title_backgroud">#EAEAEA</color>
     <color name="color_lecture_title_topic">#7A67EE</color>
 
+    <!--关注讲座按钮颜色-->
+    <color name="color_watch">#1E90FF</color>
+
 </resources>

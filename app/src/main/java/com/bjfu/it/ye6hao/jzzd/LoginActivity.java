@@ -25,7 +25,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private TextView mUsername;
     private TextView mPassword;
-    private Button mLogOut;
+    private Button mLogOut;     //退出
 
     private User loginUser;//用于登录验证
 
@@ -141,7 +141,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    //退出登录
+    //退出登录，清空本地缓存
     public void logOut(View view){
         User.logOut();
         User currentUser = User.getCurrentUser(User.class);

@@ -33,7 +33,7 @@ public class IndexActivity extends AppCompatActivity {
     ListView mLectureListView;
 
 
-    private User localUser;//获取本地用户
+    private User localUser;//获取本地用户  ?如何为全局变量，都可以访问
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,7 +123,7 @@ public class IndexActivity extends AppCompatActivity {
             lecture.setHost("无");
             lecture.setStatus(true);
             lecture.setHotNum(0);
-            lecture.setFavoriteNum(0);
+            //lecture.setWatchNum(0);
             lecture.setSourceFrom("测试");
 
             lecture.save(new SaveListener<String>() {
