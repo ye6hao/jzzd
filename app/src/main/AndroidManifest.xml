@@ -20,7 +20,9 @@
         android:icon="@mipmap/jzzd_108"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        >
+
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,11 +30,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".IndexActivity" />
+
+        <activity android:name=".MainActivity"
+            android:theme="@style/MyTheme"/>
+
         <activity android:name=".RegistActivity" />
-        <activity android:name=".PersonalActivity" />
-        <activity android:name=".AlterInfoActivity" />
-        <activity android:name=".LectureInfoActivity"></activity>
+
+        <activity android:name=".personal.AlterInfoActivity" />
+        <activity android:name=".lecture.LectureInfoActivity"/>
+
+
+
+
     </application>
 
 </manifest>

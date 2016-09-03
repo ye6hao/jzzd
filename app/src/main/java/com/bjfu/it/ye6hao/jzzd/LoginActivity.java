@@ -1,13 +1,14 @@
 package com.bjfu.it.ye6hao.jzzd;
 
+
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
+
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,7 +17,6 @@ import com.bjfu.it.ye6hao.jzzd.model.User;
 
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobConfig;
-import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
 
@@ -25,14 +25,13 @@ public class LoginActivity extends AppCompatActivity {
 
     private TextView mUsername;
     private TextView mPassword;
-    private Button mLogOut;     //退出
 
     private User loginUser;//用于登录验证
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //requestWindowFeature(Window.FEATURE_NO_TITLE);//去掉标题栏
+        requestWindowFeature(Window.FEATURE_NO_TITLE);//去掉标题栏
         setContentView(R.layout.login);
 
         BmobConfig config =new BmobConfig.Builder(this)
@@ -48,20 +47,23 @@ public class LoginActivity extends AppCompatActivity {
         Bmob.initialize(config);
 
 
-            /*
-            * 本地会自动保存一份当前用户信息，有效期为一年
-            * 用户第一次登录输入账户和密码
-            */
+        /*
+        * 本地会自动保存一份当前用户信息，有效期为一年
+        * 用户第一次登录输入账户和密码
+        */
+
         final Handler handler = new Handler();
         //匿名内部类。连名字都没有，只有在这里才会调用
         handler.post(new Runnable() {
             @Override
             public void run() {
+
                 loginUser = User.getCurrentUser(User.class);
+
                 if (loginUser != null) {
                     // 允许用户使用应用,进入主页面
                     Intent intent = new Intent();
-                    intent.setClass(LoginActivity.this, IndexActivity.class);
+                    intent.setClass(LoginActivity.this,MainActivity.class);
                     startActivity(intent);
                     finish();
 
@@ -78,24 +80,6 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-/*
-        loginUser = User.getCurrentUser(User.class);
-        if (loginUser != null) {
-            // 允许用户使用应用,进入主页面
-            Intent intent = new Intent();
-            intent.setClass(LoginActivity.this, IndexActivity.class);
-            startActivity(intent);
-
-        } else {
-            //缓存用户对象为空时， 可打开用户注册界面…
-            return;
-        }
-        finish();*/
     }
 
     /*提交反馈信息*/
@@ -122,7 +106,7 @@ public class LoginActivity extends AppCompatActivity {
                     Intent intent=new Intent();
                     //将登陆成功的用户名存放到
                     intent.putExtra("username",loginUser.getUsername());
-                    intent.setClass(LoginActivity.this,IndexActivity.class);
+                    intent.setClass(LoginActivity.this,MainActivity.class);
                     startActivity(intent);
                 }else{
                     Toast.makeText(LoginActivity.this,"登录失败:"+e,Toast.LENGTH_LONG).show();
@@ -141,11 +125,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    //退出登录，清空本地缓存
-    public void logOut(View view){
-        User.logOut();
-        User currentUser = User.getCurrentUser(User.class);
-    }
 
 
 

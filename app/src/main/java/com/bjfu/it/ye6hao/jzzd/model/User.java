@@ -23,13 +23,6 @@ public class User extends BmobUser {
     */
 
 
-    /*
-    每个BmobObject对象都有几个默认的键(数据列)是不需要开发者指定的，
-    objectId是每个保存成功数据的唯一标识符。
-    createdAt和updatedAt代表每个对象(每条数据)在服务器上创建和最后修改的时间。
-    这些键(数据列)的创建和数据内容是由服务器端自主来完成的。
-    */
-
 
     /*
     //BmobObject 封装完成，此处不用再去实现
