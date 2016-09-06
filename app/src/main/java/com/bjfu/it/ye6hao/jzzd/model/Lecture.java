@@ -6,6 +6,7 @@ import java.util.Date;
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.datatype.BmobDate;
+import cn.bmob.v3.datatype.BmobRelation;
 
 /**
  * Created by yellow_hao on 2016/6/16.
@@ -43,8 +44,18 @@ public class Lecture extends BmobObject implements Serializable {
     private String location;        //8、地址
     private boolean status;         //9、讲座状态：是否过时，false为过时
     private Integer hotNum;         //10、热度：浏览次数
-   // private Integer watchNum;    //11、收藏量
-    private String sourceFrom;      //12、信息来源
+    private String sourceFrom;      //11、信息来源
+
+
+    private BmobRelation likes;   //多对多关系：用于存储喜欢该帖子的所有用户
+
+    public BmobRelation getLikes() {
+        return likes;
+    }
+
+    public void setLikes(BmobRelation likes) {
+        this.likes = likes;
+    }
 
     @Override
     public String toString() {
@@ -58,19 +69,6 @@ public class Lecture extends BmobObject implements Serializable {
                 "时间：" + lectureDate.getDate() + '\n' +
                 "讲座地址：" + location;
     }
-/*
-
-    public Integer getWatchNum() {
-        return watchNum;
-    }
-
-    public void setWatchNum(Integer watchNum) {
-        this.watchNum = watchNum;
-    }
-
-
-*/
-
 
 
     public String getTopic() {

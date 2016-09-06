@@ -13,10 +13,16 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.baidu.mapapi.SDKInitializer;
 import com.bjfu.it.ye6hao.jzzd.map.MapFragment;
 import com.bjfu.it.ye6hao.jzzd.message.MessageFragment;
+import com.bjfu.it.ye6hao.jzzd.model.Lecture;
 import com.bjfu.it.ye6hao.jzzd.model.User;
 import com.bjfu.it.ye6hao.jzzd.personal.PersonalFragment;
+
+import cn.bmob.v3.datatype.BmobDate;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.SaveListener;
 
 public class MainActivity extends FragmentActivity implements View.OnClickListener {
 
@@ -41,19 +47,20 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+
         setContentView(R.layout.main);
+
+        //初始化地图sdk
+        SDKInitializer.initialize(getApplicationContext());
+
         initView();
         initEvent();
         setSelect(0);
+
+
     }
 
-    private void initEvent()
-    {
-        mTabWeixin.setOnClickListener(this);
-        mTabFrd.setOnClickListener(this);
-        mTabAddress.setOnClickListener(this);
-        mTabSettings.setOnClickListener(this);
-    }
+
 
     private void initView()
     {
@@ -67,6 +74,15 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         mImgAddress = (ImageButton) findViewById(R.id.id_tab_03_message_img);
         mImgSettings = (ImageButton) findViewById(R.id.id_tab_04_personal_img);
     }
+
+    private void initEvent()
+    {
+        mTabWeixin.setOnClickListener(this);
+        mTabFrd.setOnClickListener(this);
+        mTabAddress.setOnClickListener(this);
+        mTabSettings.setOnClickListener(this);
+    }
+
     @Override
     public void onClick(View v)
     {
@@ -137,8 +153,12 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
             case 1:
                 if (mTab02 == null) {
-                    mTab02 = new MapFragment();
+                    mTab02 = new MapFragment();//装载地图
+
+
                     transaction.add(R.id.id_content, mTab02);
+
+
                 } else {
                     transaction.show(mTab02);
 
@@ -234,7 +254,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         return true;
     }
 
-
     //这个菜单在右上角，观察不到。。。。。。
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -252,7 +271,66 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     }
 
 
+    public void createLecture(){
+        Lecture lecture = new Lecture();
+        for(int i=1;i<=10;i++){
+            lecture.setTopic("戏剧的美妙－从契诃夫谈起"+String.valueOf(i));
+            lecture.setTopicIntro("主题简介");
+            lecture.setSpeaker("童道明");
+            lecture.setSpeakerIntro("主讲简介");
+            BmobDate date = BmobDate.createBmobDate("yyyy-MM-dd HH:mm","2016-09-25 19:00");
+            lecture.setLectureDate(date);
+            lecture.setLocation("北京林业大学二教110");
+            lecture.setTypeId("人文社会");
+            lecture.setHost("无");
+            lecture.setHotNum(0);
+            lecture.setStatus(true);
+            lecture.setSourceFrom("微信公众号");
 
-    //回调接口，实现SettingFragment.MyListener中的itemClicked()方法
+            lecture.save(new SaveListener<String>() {
+                @Override
+                public void done(String s, BmobException e) {
+                    if(e==null){
+                        //Toast.makeText(MainActivity.this,"创建数据成功",Toast.LENGTH_SHORT).show();
+                    }else {
+                        Toast.makeText(MainActivity.this,"创建数据失败"+e,Toast.LENGTH_SHORT).show();
+
+                    }
+                }
+            });
+        }
+
+        for(int i=1;i<=10;i++){
+            lecture.setTopic("我的万达帝国"+String.valueOf(i));
+            lecture.setTopicIntro("主题简介");
+            lecture.setSpeaker("王健林");
+            lecture.setSpeakerIntro("主讲简介");
+            BmobDate date = BmobDate.createBmobDate("yyyy-MM-dd HH:mm","2016-09-25 19:00");
+            lecture.setLectureDate(date);
+            lecture.setLocation("北京大学逸夫楼");
+            lecture.setTypeId("创业创新");
+            lecture.setHost("无");
+            lecture.setHotNum(0);
+            lecture.setStatus(true);
+            lecture.setSourceFrom("微信公众号");
+
+            lecture.save(new SaveListener<String>() {
+                @Override
+                public void done(String s, BmobException e) {
+                    if(e==null){
+                        //Toast.makeText(MainActivity.this,"创建数据成功",Toast.LENGTH_SHORT).show();
+                    }else {
+                        Toast.makeText(MainActivity.this,"创建数据失败"+e,Toast.LENGTH_SHORT).show();
+
+                    }
+                }
+            });
+        }
+
+
+    }
+
+
+        //回调接口，实现SettingFragment.MyListener中的itemClicked()方法
 
 }
