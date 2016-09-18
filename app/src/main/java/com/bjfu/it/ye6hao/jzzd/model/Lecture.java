@@ -1,5 +1,7 @@
 package com.bjfu.it.ye6hao.jzzd.model;
 
+import com.bjfu.it.ye6hao.jzzd.map.MapInfo;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -46,8 +48,23 @@ public class Lecture extends BmobObject implements Serializable {
     private Integer hotNum;         //10、热度：浏览次数
     private String sourceFrom;      //11、信息来源
 
+    /*******************************************************************/
 
-    private BmobRelation likes;   //多对多关系：用于存储喜欢该帖子的所有用户
+
+    /*  mapInfo	    Pointer	    讲座在地图上的位置
+        likes	    Relation	关注讲座的人*/
+
+    private BmobRelation likes;     //多对多关系：用于存储喜欢该帖子的所有用户
+
+    private MapInfo mapInfo;       //一个点可以有多条讲座，一对多的关系 Point
+
+    public MapInfo getMapInfo() {
+        return mapInfo;
+    }
+
+    public void setMapInfo(MapInfo mapInfo) {
+        this.mapInfo = mapInfo;
+    }
 
     public BmobRelation getLikes() {
         return likes;
@@ -56,6 +73,8 @@ public class Lecture extends BmobObject implements Serializable {
     public void setLikes(BmobRelation likes) {
         this.likes = likes;
     }
+
+    /******************************************************************/
 
     @Override
     public String toString() {
