@@ -1,9 +1,5 @@
 package com.bjfu.it.ye6hao.jzzd.personal;
 
-import android.app.Activity;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -11,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bjfu.it.ye6hao.jzzd.R;
@@ -22,7 +17,8 @@ import cn.bmob.v3.listener.UpdateListener;
 
 public class AlterInfoActivity extends AppCompatActivity {
 
-    private User loginUser;//声明存放在本地的用户
+    private User loginUser;
+
 
     /*****************************************************/
 
@@ -39,18 +35,14 @@ public class AlterInfoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.personal_alter_info);
-
+        setContentView(R.layout.tab_04_personal_alter_info);
 
         /*****************************************************/
-        toolbar = (Toolbar) findViewById(R.id.activity_main_toolbar);
+        toolbar = (Toolbar) findViewById(R.id.personal_toolbar);
 
-        toolbar.setTitle("修改信息");
+        toolbar.setTitle("");
         toolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(toolbar);
-
-        // Menu item click 监听事件要在 setSupportActionBar 之后才有作用
-
         toolbar.setNavigationIcon(R.drawable.back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,7 +50,6 @@ public class AlterInfoActivity extends AppCompatActivity {
                 finish();
             }
         });
-
 
         /*****************************************************/
 
@@ -88,7 +79,10 @@ public class AlterInfoActivity extends AppCompatActivity {
 
         boolean temp_sex = true;
         if (personal_sex.getText().toString().equals("男")) {
-            temp_sex = true;} else {temp_sex = false;}
+            temp_sex = true;
+        } else {
+            temp_sex = false;
+        }
         loginUser.setSex(temp_sex);
 
         loginUser.setSignature(personal_signature.getText().toString());
@@ -102,7 +96,7 @@ public class AlterInfoActivity extends AppCompatActivity {
 
                     Intent intent =new Intent();
                     setResult(RESULT_OK,intent);
-                    Toast.makeText(AlterInfoActivity.this,"修改成功"+loginUser.getAge().toString(),Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(AlterInfoActivity.this,"修改成功"+loginUser.getAge().toString(),Toast.LENGTH_SHORT).show();
                     //修改成功自动销毁修改Activity
                     finish();
                 }else{

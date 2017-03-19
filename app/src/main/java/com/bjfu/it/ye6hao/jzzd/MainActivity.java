@@ -1,4 +1,5 @@
 package com.bjfu.it.ye6hao.jzzd;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -14,73 +15,86 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.baidu.mapapi.SDKInitializer;
+import com.bjfu.it.ye6hao.jzzd.dao.CustomApplication;
 import com.bjfu.it.ye6hao.jzzd.map.MapFragment;
 import com.bjfu.it.ye6hao.jzzd.message.MessageFragment;
-import com.bjfu.it.ye6hao.jzzd.model.Lecture;
 import com.bjfu.it.ye6hao.jzzd.model.User;
 import com.bjfu.it.ye6hao.jzzd.personal.PersonalFragment;
 
-import cn.bmob.v3.datatype.BmobDate;
-import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.Bmob;
+import cn.bmob.v3.BmobUser;
 
 public class MainActivity extends FragmentActivity implements View.OnClickListener {
 
 
-    private LinearLayout mTabWeixin;
-    private LinearLayout mTabFrd;
-    private LinearLayout mTabAddress;
-    private LinearLayout mTabSettings;
+    private LinearLayout mTabIndex;
+    private LinearLayout mTabMap;
+    private LinearLayout mTabMessage;
+    private LinearLayout mTabPersonal;
 
-    private ImageButton mImgWeixin;
-    private ImageButton mImgFrd;
-    private ImageButton mImgAddress;
-    private ImageButton mImgSettings;
+    private ImageButton mImgIndex;
+    private ImageButton mImgMap;
+    private ImageButton mImgMessage;
+    private ImageButton mImgPersonal;
 
-    private Fragment mTab01;    //分类显示
-    private Fragment mTab02;    //地图
-    private Fragment mTab03;    //消息
-    private Fragment mTab04;    //个人中心
+    private Fragment mTab01;    //index首页
+    private Fragment mTab02;    //map地图
+    private Fragment mTab03;    //message消息
+    private Fragment mTab04;    //personal个人中心
+
+
+    private User loginUser;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-
         setContentView(R.layout.main);
+
+/*        CustomApplication cApp = (CustomApplication)getApplication();
+        if (cApp.isExit()) {
+            finish();
+        }*/
+
+        loginUser = BmobUser.getCurrentUser(User.class);
+
+        if (loginUser.getGuideInfo() == false) {
+            // 允许用户使用应用,进入主页面
+            Intent intent = new Intent();
+            //将登陆成功的用户名存放到(已经保存到了本地)
+            intent.setClass(MainActivity.this, GuideActivity.class);
+            startActivity(intent);
+
+        }
 
         //初始化地图sdk
         SDKInitializer.initialize(getApplicationContext());
-
         initView();
         initEvent();
         setSelect(0);
-
-
     }
 
 
 
     private void initView()
     {
-        mTabWeixin = (LinearLayout) findViewById(R.id.id_tab_01_index);
-        mTabFrd = (LinearLayout) findViewById(R.id.id_tab_02_map);
-        mTabAddress = (LinearLayout) findViewById(R.id.id_tab_03_message);
-        mTabSettings = (LinearLayout) findViewById(R.id.id_tab_04_personal);
+        mTabIndex = (LinearLayout) findViewById(R.id.id_tab_01_index);
+        mTabMap = (LinearLayout) findViewById(R.id.id_tab_02_map);
+        mTabMessage = (LinearLayout) findViewById(R.id.id_tab_03_message);
+        mTabPersonal = (LinearLayout) findViewById(R.id.id_tab_04_personal);
 
-        mImgWeixin = (ImageButton) findViewById(R.id.id_tab_01_index_img);
-        mImgFrd = (ImageButton) findViewById(R.id.id_tab_02_map_img);
-        mImgAddress = (ImageButton) findViewById(R.id.id_tab_03_message_img);
-        mImgSettings = (ImageButton) findViewById(R.id.id_tab_04_personal_img);
+        mImgIndex = (ImageButton) findViewById(R.id.id_tab_01_index_img);
+        mImgMap = (ImageButton) findViewById(R.id.id_tab_02_map_img);
+        mImgMessage = (ImageButton) findViewById(R.id.id_tab_03_message_img);
+        mImgPersonal = (ImageButton) findViewById(R.id.id_tab_04_personal_img);
     }
 
     private void initEvent()
     {
-        mTabWeixin.setOnClickListener(this);
-        mTabFrd.setOnClickListener(this);
-        mTabAddress.setOnClickListener(this);
-        mTabSettings.setOnClickListener(this);
+        mTabIndex.setOnClickListener(this);
+        mTabMap.setOnClickListener(this);
+        mTabMessage.setOnClickListener(this);
+        mTabPersonal.setOnClickListener(this);
     }
 
     @Override
@@ -121,6 +135,12 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         */
 
 
+        /*
+        *
+        * 3.0以下：getSupportFragmentManager()
+        * 3.0以上：getFragmentManager()
+        * */
+
         //FragmentManager管理所有的Fragment
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
@@ -148,7 +168,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                     //不为空显示出来
                     transaction.show(mTab01);
                 }
-                mImgWeixin.setImageResource(R.drawable.tab_01_index_pressed);
+                mImgIndex.setImageResource(R.drawable.tab_01_index_pressed);
                 break;
 
             case 1:
@@ -163,7 +183,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                     transaction.show(mTab02);
 
                 }
-                mImgFrd.setImageResource(R.drawable.tab_02_map_pressed);
+                mImgMap.setImageResource(R.drawable.tab_02_map_pressed);
                 break;
 
             case 2:
@@ -173,7 +193,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 } else {
                     transaction.show(mTab03);
                 }
-                mImgAddress.setImageResource(R.drawable.tab_03_message_pressed);
+                mImgMessage.setImageResource(R.drawable.tab_03_message_pressed);
                 break;
 
             case 3:
@@ -183,7 +203,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 } else {
                     transaction.show(mTab04);
                 }
-                mImgSettings.setImageResource(R.drawable.tab_04_personal_pressed);
+                mImgPersonal.setImageResource(R.drawable.tab_04_personal_pressed);
                 break;
 
             default:
@@ -193,24 +213,16 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         transaction.commit();
     }
 
+
+    /**
+     * 隐藏Fragment
+     */
     private void hideFragment(FragmentTransaction transaction)
     {
-        if (mTab01 != null)
-        {
-            transaction.hide(mTab01);
-        }
-        if (mTab02 != null)
-        {
-            transaction.hide(mTab02);
-        }
-        if (mTab03 != null)
-        {
-            transaction.hide(mTab03);
-        }
-        if (mTab04 != null)
-        {
-            transaction.hide(mTab04);
-        }
+        if (mTab01 != null) {transaction.hide(mTab01);}
+        if (mTab02 != null) {transaction.hide(mTab02);}
+        if (mTab03 != null) {transaction.hide(mTab03);}
+        if (mTab04 != null) {transaction.hide(mTab04);}
     }
 
 
@@ -219,10 +231,10 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
      */
     private void resetImgs()
     {
-        mImgWeixin.setImageResource(R.drawable.tab_01_index_normal);
-        mImgFrd.setImageResource(R.drawable.tab_02_map_normal);
-        mImgAddress.setImageResource(R.drawable.tab_03_message_normal);
-        mImgSettings.setImageResource(R.drawable.tab_04_personal_normal);
+        mImgIndex.setImageResource(R.drawable.tab_01_index_normal);
+        mImgMap.setImageResource(R.drawable.tab_02_map_normal);
+        mImgMessage.setImageResource(R.drawable.tab_03_message_normal);
+        mImgPersonal.setImageResource(R.drawable.tab_04_personal_normal);
     }
 
 
@@ -247,90 +259,12 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     }
 
 
-    //创建菜单项，退出登录
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    //这个菜单在右上角，观察不到。。。。。。
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.user_log_out:
-                User.logOut();   //清除缓存用户对象
-                User currentUser = User.getCurrentUser(User.class); // 现在的currentUser是null了
-                finish();
-                System.exit(0);
-                break;
-            default:
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-
-    public void createLecture(){
-        Lecture lecture = new Lecture();
-        for(int i=1;i<=10;i++){
-            lecture.setTopic("戏剧的美妙－从契诃夫谈起"+String.valueOf(i));
-            lecture.setTopicIntro("主题简介");
-            lecture.setSpeaker("童道明");
-            lecture.setSpeakerIntro("主讲简介");
-            BmobDate date = BmobDate.createBmobDate("yyyy-MM-dd HH:mm","2016-09-25 19:00");
-            lecture.setLectureDate(date);
-            lecture.setLocation("北京林业大学二教110");
-            lecture.setTypeId("人文社会");
-            lecture.setHost("无");
-            lecture.setHotNum(0);
-            lecture.setStatus(true);
-            lecture.setSourceFrom("微信公众号");
-
-            lecture.save(new SaveListener<String>() {
-                @Override
-                public void done(String s, BmobException e) {
-                    if(e==null){
-                        //Toast.makeText(MainActivity.this,"创建数据成功",Toast.LENGTH_SHORT).show();
-                    }else {
-                        Toast.makeText(MainActivity.this,"创建数据失败"+e,Toast.LENGTH_SHORT).show();
-
-                    }
-                }
-            });
+    protected void onStart() {
+        super.onStart();
+        CustomApplication cApp = (CustomApplication)getApplication();
+        if (cApp.isExit()) {
+            finish();
         }
 
-        for(int i=1;i<=10;i++){
-            lecture.setTopic("我的万达帝国"+String.valueOf(i));
-            lecture.setTopicIntro("主题简介");
-            lecture.setSpeaker("王健林");
-            lecture.setSpeakerIntro("主讲简介");
-            BmobDate date = BmobDate.createBmobDate("yyyy-MM-dd HH:mm","2016-09-25 19:00");
-            lecture.setLectureDate(date);
-            lecture.setLocation("北京大学逸夫楼");
-            lecture.setTypeId("创业创新");
-            lecture.setHost("无");
-            lecture.setHotNum(0);
-            lecture.setStatus(true);
-            lecture.setSourceFrom("微信公众号");
-
-            lecture.save(new SaveListener<String>() {
-                @Override
-                public void done(String s, BmobException e) {
-                    if(e==null){
-                        //Toast.makeText(MainActivity.this,"创建数据成功",Toast.LENGTH_SHORT).show();
-                    }else {
-                        Toast.makeText(MainActivity.this,"创建数据失败"+e,Toast.LENGTH_SHORT).show();
-
-                    }
-                }
-            });
-        }
-
-
     }
-
-
-        //回调接口，实现SettingFragment.MyListener中的itemClicked()方法
-
 }

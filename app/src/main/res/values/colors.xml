@@ -1,16 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">#2BC18C</color>
+    <color name="colorPrimaryDark">#FF000000</color>
     <color name="colorAccent">#FF4081</color>
+
+
+
+    <color name="color_top_red">#FF4081</color>
+    <color name="color_top_green">#2BC18C</color>
+
+
 
     <!--index的welcometitle背景颜色-->
     <color name="color_welcome_title">#BCD2EE</color>
     <color name="color_lecture_title_backgroud">#EAEAEA</color>
     <color name="color_lecture_title_topic">#7A67EE</color>
 
+
+
+    <!--login.xml-->
+    <!--登录按钮的颜色-->
+    <color name="login_bgcolor">#FFE3E3E7</color>
+    <color name="login_btn">#1E90FF</color>
+    <color name="login_btn_text">#FFFFFFFF</color>
+
+
     <!--关注讲座按钮颜色-->
     <color name="color_watch">#1E90FF</color>
+    <color name="color_logout_bg">#FF3030</color>
 
 
     <!--tab色系-->

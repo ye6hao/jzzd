@@ -7,6 +7,7 @@ import android.os.Handler;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
@@ -15,8 +16,10 @@ import android.widget.Toast;
 
 import com.bjfu.it.ye6hao.jzzd.model.User;
 
+import cn.bmob.push.BmobPush;
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobConfig;
+import cn.bmob.v3.BmobInstallation;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
 
@@ -44,7 +47,14 @@ public class LoginActivity extends AppCompatActivity {
         //文件的过期时间(单位为秒)：默认1800s
         .setFileExpiration(2500)
         .build();
+
         Bmob.initialize(config);
+
+        // 使用推送服务时的初始化操作
+        BmobInstallation.getCurrentInstallation().save();
+        // 启动推送服务
+        BmobPush.startWork(this);
+
 
 
         /*
@@ -52,32 +62,31 @@ public class LoginActivity extends AppCompatActivity {
         * 用户第一次登录输入账户和密码
         */
 
+        //注册完自动登录找不到useId，objectId
+
         final Handler handler = new Handler();
-        //匿名内部类。连名字都没有，只有在这里才会调用
         handler.post(new Runnable() {
             @Override
             public void run() {
-
+                //得到缓存用户判断是否为空
                 loginUser = User.getCurrentUser(User.class);
-
-                if (loginUser != null) {
-                    // 允许用户使用应用,进入主页面
-                    Intent intent = new Intent();
-                    intent.setClass(LoginActivity.this,MainActivity.class);
-                    startActivity(intent);
-                    finish();
-
-                } else {
+                if (loginUser!= null) {
+                    if(loginUser.getObjectId()!=null){
+                        // 允许用户使用应用,进入主页面
+                        Intent intent = new Intent();
+                        intent.setClass(LoginActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }else {
+                        return;
+                    }
+                }
+                else {
                     //缓存用户对象为空时， 可打开用户注册界面…
                     return;
                 }
-
-
             }
-
-
         });
-
 
 
     }
@@ -96,23 +105,23 @@ public class LoginActivity extends AppCompatActivity {
 
          /*登陆验证*/
         loginUser.login(new SaveListener<User>() {
-
             @Override
             public void done(User user, BmobException e) {
                 if(e==null){
-                    Toast.makeText(LoginActivity.this,"submit success",Toast.LENGTH_LONG).show();
-                    //登陆成功跳转到index主页面
-                    //传递用户名和用户id
-                    Intent intent=new Intent();
-                    //将登陆成功的用户名存放到
-                    intent.putExtra("username",loginUser.getUsername());
-                    intent.setClass(LoginActivity.this,MainActivity.class);
+
+
+                    // 允许用户使用应用,进入主页面
+                    Intent intent = new Intent();
+                    intent.setClass(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
+                    finish();
+                    Log.i("LoginActivity","登录成功");
+
+
                 }else{
-                    Toast.makeText(LoginActivity.this,"登录失败:"+e,Toast.LENGTH_LONG).show();
+                    Log.i("LoginActivity","登录失败"+e);
                 }
             }
-
         });
 
     }

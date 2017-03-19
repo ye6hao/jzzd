@@ -23,14 +23,6 @@ public class User extends BmobUser {
     */
 
 
-
-    /*
-    //BmobObject 封装完成，此处不用再去实现
-    private String objectId;  //编号
-    private String username;  //用户名
-    private String password;  //密码
-    */
-
    //按26个字母排序
     private Integer     age;            //年龄
     private String      career;         //职业
@@ -40,6 +32,24 @@ public class User extends BmobUser {
     private String      signature;      //个性签名
     private String      userType;       //用户类型
 
+
+
+    private String school;      //所在学校
+    private String types;       //喜欢的讲座类型，多个类型用分号表示
+
+    private Boolean guideInfo;  //是否填写了引导页内容
+
+
+    ///////////////////////////////////////////
+
+
+    public Boolean getGuideInfo() {
+        return guideInfo;
+    }
+
+    public void setGuideInfo(Boolean guideInfo) {
+        this.guideInfo = guideInfo;
+    }
 
     public Integer getAge() {
         return age;
@@ -97,6 +107,22 @@ public class User extends BmobUser {
         this.userType = userType;
     }
 
+
+    public String getSchool() {
+        return school;
+    }
+
+    public void setSchool(String school) {
+        this.school = school;
+    }
+
+    public String getTypes() {
+        return types;
+    }
+
+    public void setTypes(String types) {
+        this.types = types;
+    }
 
     @Override
     public String toString() {

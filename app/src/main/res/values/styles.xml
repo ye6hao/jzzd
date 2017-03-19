@@ -5,6 +5,7 @@
        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
    -->
     <style name="AppBaseTheme" parent="android:Theme.Light">
+
         <!--
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
@@ -12,14 +13,22 @@
         -->
     </style>
 
+
+    <!-- Android5.0引入了一个新控件Toolbar，代替了ActionBar，
+    由于其高度的灵活性、可定制性，符合Material Design的风格，
+    越来越多的应用用上了Toolbar，我们可以看到知乎、网易云音乐的标题栏用的Toolbar。
+    由于ActionBar是由系统创建并对其进行相关的初始化，并不能很好的控制，
+    所以在很多APP上就出现了跟ActionBar相似的效果，但是又不是ActionBar，
+    模仿ActionBar而已，我们原来的APP就是自己定义的一个简单的title布局，
+    使用的时候加入到相应的页面，所以这个时候Toolbar出现了，
+    ToolBar只是一个普通的控件，继承自ViewGroup，可以直接在布局文件中使用，
+    但是跟ActionBar又没有太大的区别，只不过更自由了。-->
+
+    <!--app级别的主体-->
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
 
-
-        <item name="windowActionBar">true</item>
-
-
+        <item name="windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
 
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -28,34 +37,40 @@
     </style>
 
 
-    <style name="MyTheme" parent="AppBaseTheme">
+
+    <style name="MyTheme" parent="AppTheme">
+
+        <!--TabPageIndicator使用的是vpiTabPageIndicatorStyle样式-->
         <item name="vpiTabPageIndicatorStyle">@style/MyWidget.TabPageIndicator</item>
 
         <!--背景图片，为何一直存在，上面的图层没有颜色，将会暴露出来？？？？-->
         <!--<item name="android:windowBackground">@drawable/init_pic</item>-->
-
-        <item name="android:windowNoTitle">true</item>
-
+        <!--<item name="android:windowNoTitle">true</item>-->
         <item name="android:animationDuration">5000</item>
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
+
+
     <style name="MyWidget.TabPageIndicator" parent="Widget">
         <item name="android:gravity">center</item>
+
         <item name="android:background">@drawable/vpi__tab_indicator</item>
-        <item name="android:paddingLeft">15dip</item>
-        <item name="android:paddingRight">15dip</item>
-        <item name="android:paddingTop">8dp</item>
-        <item name="android:paddingBottom">8dp</item>
-        <item name="android:textAppearance">@style/MyTextAppearance.TabPageIndicator</item>
-        <item name="android:textSize">16sp</item>
+
+        <item name="android:paddingLeft">12dip</item>
+        <item name="android:paddingRight">12dip</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@drawable/viewpager_title_textcolor</item>
         <item name="android:maxLines">1</item>
     </style>
 
     <style name="MyTextAppearance.TabPageIndicator" parent="Widget">
-        <!--<item name="android:textStyle">bold</item>-->
-        <item name="android:textColor">@color/black</item>
+        <!--<item name="android:textStyle">bold</item>--><!--字体加粗-->
+        <item name="android:textColor">@color/gray</item>
     </style>
+
 
 
 </resources>
